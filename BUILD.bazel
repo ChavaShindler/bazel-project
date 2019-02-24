@@ -1,0 +1,23 @@
+package(default_visibility = ["//visibility:public"])
+
+# ts_library and ng_module use the `//:tsconfig.json` target
+# by default. This alias allows omitting explicit tsconfig
+# attribute.
+alias(
+    name = "tsconfig.json",
+    actual = "//src:tsconfig.json",
+)
+filegroup(
+    name = "node_modules",
+    srcs = glob(
+        include = ["node_modules/**/*"],
+        exclude = [
+          "node_modules/test/**",
+          "node_modules/docs/**",
+          # Files with spaces are not allowed in Bazel runfiles
+          # See https://github.com/bazelbuild/bazel/issues/4327
+          "node_modules/**/* */**",
+          "node_modules/**/* *",
+        ],
+    ),
+)
